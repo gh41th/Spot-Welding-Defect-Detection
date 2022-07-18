@@ -29,7 +29,6 @@ def draw_rect(im, cords):
     #cords = cords[:,:4]
     cords = cords.reshape(-1,5)
     for cord in cords:
-        
         pt1, pt2 = (cord[0], cord[1]) , (cord[2], cord[3])
                 
         pt1 = int(pt1[0]), int(pt1[1])
