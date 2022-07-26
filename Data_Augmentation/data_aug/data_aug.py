@@ -609,7 +609,7 @@ class RandomShear(object):
         img = cv2.warpAffine(img, M, (int(nW), img.shape[0]))
     
         if shear_factor < 0:
-        	img, bboxes = HorizontalFlip()(img, bboxes)
+            img, bboxes = HorizontalFlip()(img, bboxes)
     
         img = cv2.resize(img, (w,h))
         scale_factor_x = nW / w
@@ -811,6 +811,28 @@ class RandomHSV(object):
         
         return img, bboxes
     
+class Brightness(object):
+    
+    def __init__(self, brightness = None):
+        
+        self.brightness = brightness
+    
+    def __call__(self, img, bboxes):
+
+        hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
+        h, s, v = cv2.split(hsv)
+        v = cv2.add(v,self.brightness)
+        v[v > 255] = 255
+        v[v < 0] = 0
+        final_hsv = cv2.merge((h, s, v))
+        img = cv2.cvtColor(final_hsv, cv2.COLOR_HSV2BGR)
+
+
+        
+        
+        return img, bboxes
+
+
 class Sequence(object):
 
     """Initialise Sequence object
